@@ -13,6 +13,7 @@ function templateHTML(title, list, body) {
         <body>
           <h1><a href="/">Hello World!</a></h1>
           ${list}
+          <a href="/create">create</a>
           ${body}
         </body>
     </html>
@@ -31,36 +32,53 @@ function templateList(filelist) {
 }
 
 var app = http.createServer(function (request, response) {
-        var _url = request.url;
-        var queryData = url.parse(_url, true).query;
-        var pathname = url.parse(_url, true).pathname;
+    var _url = request.url;
+    var queryData = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
 
-        if (pathname === '/') {
-            if (queryData.id === undefined) {
-                fs.readdir('./data', function (err, filelist) {
-                    var title = 'Welcome';
-                    var description = 'Hello, Node.js';
+    if (pathname === '/') {
+        if (queryData.id === undefined) {
+            fs.readdir('./data', function (err, filelist) {
+                var title = 'Welcome';
+                var description = 'Hello, Node.js';
+                var list = templateList(filelist);
+                var template = templateHTML(title, list, `<h2>${title}</h2><p>${description}</p>`);
+                response.writeHead(200);
+                response.end(template);
+            });
+        } else {
+            fs.readdir('./data', function (err, filelist) {
+                fs.readFile(`data/${queryData.id}`, 'utf8', function (err, description) {
+                    var title = queryData.id;
                     var list = templateList(filelist);
                     var template = templateHTML(title, list, `<h2>${title}</h2><p>${description}</p>`);
                     response.writeHead(200);
                     response.end(template);
                 });
-            } else {
-                fs.readdir('./data', function (err, filelist) {
-                    fs.readFile(`data/${queryData.id}`, 'utf8', function (err, description) {
-                        var title = queryData.id;
-                        var list = templateList(filelist);
-                        var template = templateHTML(title, list, `<h2>${title}</h2><p>${description}</p>`);
-                        response.writeHead(200);
-                        response.end(template);
-                    });
-                });
-            }
-        } else {
-            response.writeHead(404);
-            response.end('Not found');
+            });
         }
+    } else if (pathname === '/create') {
+        fs.readdir('./data', function (err, filelist) {
+            var title = 'WEB - create';
+            var list = templateList(filelist);
+            var template = templateHTML(title, list, `
+                <form action="http://localhost:3000/create_process" method="post">
+                    <p><input type="text" name="title"></p>
+                    <p>
+                        <textarea name="description"></textarea>
+                    </p>
+                    <p>
+                        <input type="submit">
+                    </p>
+                </form>
+            `);
+            response.writeHead(200);
+            response.end(template);
+        });
+    } else {
+        response.writeHead(404);
+        response.end('Not found');
     }
-);
+});
 
 app.listen(3000);
