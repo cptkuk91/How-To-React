@@ -24,3 +24,5 @@ testFolder 경로를 './data' 에서 './../data' 수정 후 작동
 실행 : pm2 start main.js
 감시 : pm2 monit
 목록 확인 : pm2 list
+
+## Add How to Use React Tech
