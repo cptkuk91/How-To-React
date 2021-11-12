@@ -28,3 +28,14 @@ testFolder 경로를 './data' 에서 './../data' 수정 후 작동
 #
 
 ## Add How to Use React Tech
+
+### PropTypes 종류
+* array: 배열
+* arrayOf: 특정 PropTypes로 이루어진 배열을 뜻합니다. ex) arrayOf(PropTypes.number)는 숫자로만 이루어진 배열입니다.
+* bool: true, false
+* func: 함수
+* number: 숫자
+* object: 객체
+* string: 문자열
+* 기타 등등 추후 https://velog.io/@cptkuk91 업데이트 예정
+
