@@ -39,3 +39,5 @@ testFolder 경로를 './data' 에서 './../data' 수정 후 작동
 * string: 문자열
 * 기타 등등 추후 https://velog.io/@cptkuk91 업데이트 예정
 
+### defaultProps와 propTypes는 꼭 사용해야 할까?
+필수 사항은 아닙니다. 하지만 큰 규모의 프로젝트를 진행 할 경우 다른 개발자들과의 협업을 위해 권장합니다. 해당 컴포넌트에서 어떤 props가 필요한지 쉽게 알 수 있습니다.
