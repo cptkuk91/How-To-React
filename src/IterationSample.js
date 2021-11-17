@@ -33,6 +33,7 @@ const IterationSample = () => {
       <input value={inputText} onChange={onChange} />
       <button onClick={onClick}>추가</button>
       <ul>{nameList}</ul>
+      <span>Test Github</span>
     </>
   );
 };
